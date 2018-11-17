@@ -1,15 +1,33 @@
 package net.virtualinfinity.leetcode.kthsmallest;
 
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.Arrays;
 
 class Solution {
     public int kthSmallest(int[][] matrix, int k) {
-        return Stream.of(matrix)
-                .flatMapToInt(IntStream::of)
-                .sorted()
-                .skip(k - 1)
-                .findFirst()
-                .orElse(0);
+        int size = matrix.length;
+        int min = matrix[0][0];
+        int max = matrix[size - 1][size - 1];
+        while (min < max) {
+            int mid = (min + max) / 2;
+            int lessThanMid = 0;
+            for (int[] row : matrix) {
+                int position = Arrays.binarySearch(row, mid);
+                if (position < 0) {
+                    position = -(position + 1);
+                } else {
+                    while (position < size && row[position] == mid) {
+                        ++position;
+                    }
+                }
+                lessThanMid += position;
+            }
+            if (lessThanMid < k) {
+                min = mid + 1;
+            } else {
+                max = mid;
+            }
+        }
+
+        return min;
     }
 }
