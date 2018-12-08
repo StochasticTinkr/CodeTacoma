@@ -4,10 +4,8 @@ import net.virtualinfinity.leetcode.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * solves https://leetcode.com/problems/find-largest-value-in-each-tree-row/
@@ -17,9 +15,21 @@ class Solution {
         final List<Integer> result = new ArrayList<>();
         List<TreeNode> depth = root == null ? Collections.emptyList() : Collections.singletonList(root);
         while (!depth.isEmpty()) {
-            int min = depth.stream().mapToInt(treeNode -> treeNode.val).max().getAsInt();
-            result.add(min);
-            depth = depth.stream().flatMap(treeNode -> Stream.of(treeNode.left, treeNode.right)).filter(Objects::nonNull).collect(Collectors.toList());
+            Iterator<TreeNode> iterator = depth.iterator();
+            int max = depth.get(0).val;
+            depth = new ArrayList<>(depth.size()*2);
+            while (iterator.hasNext()) {
+                TreeNode next = iterator.next();
+                max = Math.max(max, next.val);
+                if (next.left != null) {
+                    depth.add(next.left);
+                }
+                if (next.right != null) {
+                    depth.add(next.right);
+                }
+            }
+            result.add(max);
+
         }
         return result;
     }
