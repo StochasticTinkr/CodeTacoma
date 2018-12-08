@@ -1,5 +1,7 @@
 package net.virtualinfinity.leetcode.kthsmallestelementinbst;
 
+import net.virtualinfinity.leetcode.TreeNode;
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -45,12 +47,3 @@ class Solution {
 }
 
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-        val = x;
-    }
-}

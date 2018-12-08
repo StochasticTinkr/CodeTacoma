@@ -48,6 +48,13 @@ public class FractionAdditionAndSubtraction {
             return new Fraction(numerator / g, denominator / g);
         }
 
+        /**
+         *
+         * @param a a number
+         * @param b another number
+         *
+         * @return the greatest common denominator
+         */
         static long gcd(long a, long b) {
             while (b != 0) {
                 long tmp = b;
